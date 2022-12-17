@@ -1,6 +1,11 @@
 package me.viharev.libraries.controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -38,6 +43,24 @@ public class IngredientController {
     @Operation(
             summary = "метод добавления ингредиента",
             description = "добавляем через Post запрос"
+    )
+    @ApiResponses(
+            value = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Ингредиент добавлен",
+                            content = {
+                                    @Content(
+                                            mediaType = "app/json",
+                                            array = @ArraySchema(
+                                                    schema = @Schema(
+                                                            implementation = Ingredient.class
+                                                    )
+                                            )
+                                    )
+                            }
+                    )
+            }
     )
     public Ingredient addIngredientInMap(@RequestBody Ingredient ingredient) {
         this.ingredientServices.addIngredient(ingredient);
