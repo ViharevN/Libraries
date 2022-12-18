@@ -8,7 +8,7 @@ public interface RecipeServices {
 
     public void getRecipe();
 
-    ResponseEntity<Recipe> getRecipeById(Integer idRecipe);
+    Recipe getRecipeById(Integer idRecipe);
 
     Recipe editRecipe(Integer idRecipe, Recipe recipe);
 

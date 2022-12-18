@@ -42,9 +42,9 @@ public class RecipeController {
                     )
             }
     )
-    public ResponseEntity<Integer> addRecipe(@RequestBody Recipe recipe) {
-        Integer id = recipeServices.addRecipe(recipe);
-        return ResponseEntity.ok(id);
+    public ResponseEntity<Recipe> addRecipe(@RequestBody Recipe recipe) {
+        recipeServices.addRecipe(recipe);
+        return ResponseEntity.ok(recipe);
     }
 
     @GetMapping("/get/{id}")
@@ -52,12 +52,12 @@ public class RecipeController {
             summary = "получаем рецепт",
             description = "получаем рецепт по его id через Get"
     )
-    public Recipe getRecipeById(@PathVariable Integer id) {
-        ResponseEntity<Recipe> recipe = recipeServices.getRecipeById(id);
+    public ResponseEntity<Recipe> getRecipeById(@PathVariable Integer id) {
+        Recipe recipe = recipeServices.getRecipeById(id);
         if (recipe != null) {
-            return recipe.getBody();
+            return ResponseEntity.ok(recipe);
         }
-        return null;
+        return ResponseEntity.notFound().build();
     }
 
     @PutMapping("/edit/{id}")
@@ -65,9 +65,12 @@ public class RecipeController {
             summary = "изменение рецепта",
             description = "изменяем рецепт по его id"
     )
-    public Recipe editRecipe(@PathVariable Integer id, @RequestBody Recipe recipe) {
-        this.recipeServices.editRecipe(id, recipe);
-        return recipe;
+    public ResponseEntity<Recipe> editRecipe(@PathVariable Integer id, @RequestBody Recipe recipe) {
+        if (recipe != null) {
+            this.recipeServices.editRecipe(id, recipe);
+            return ResponseEntity.ok(recipe);
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/delete/{id}")

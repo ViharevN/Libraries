@@ -21,15 +21,6 @@ import org.springframework.web.bind.annotation.*;
 public class IngredientController {
     private IngredientServices ingredientServices;
 
-    @GetMapping("/add")
-    @Operation(
-            summary = "добавляем ингредиент",
-            description = "добавляем ингредиент через get-запрос"
-    )
-    public void addIngredient(@RequestParam Ingredient ingredient) {
-        this.ingredientServices.addIngredient(ingredient);
-    }
-
     @GetMapping("/get/{id}")
     @Operation(
             summary = "получаем ингредиент",

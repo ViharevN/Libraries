@@ -12,7 +12,7 @@ public interface IngredientServices {
 
     boolean removeIngredient(Integer id);
 
-    ResponseEntity<Ingredient> getIngredientById(Integer id);
+    Ingredient getIngredientById(Integer id);
 
     Ingredient getAllIngredients();
 }

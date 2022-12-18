@@ -2,7 +2,6 @@ package me.viharev.libraries.services.impl;
 
 import me.viharev.libraries.models.Ingredient;
 import me.viharev.libraries.services.IngredientServices;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Iterator;
@@ -11,11 +10,12 @@ import java.util.Map;
 @Service
 public class IngredientServicesImpl implements IngredientServices {
     public static Integer id = 0;
-    private Map<Integer, Ingredient> ingredientMap = new LinkedHashMap<>();
+    public static Integer counter = 0;
+    private final Map<Integer, Ingredient> ingredientMap = new LinkedHashMap<>();
     @Override
     public void addIngredient(Ingredient ingredient) {
-        ingredientMap.put(id, ingredient);
-        id++;
+        this.ingredientMap.put(id, ingredient);
+        id=counter++;
     }
 
     @Override
@@ -29,10 +29,9 @@ public class IngredientServicesImpl implements IngredientServices {
     }
     @Override
     public Ingredient editIngredient(Integer id, Ingredient ingredient) {
-        for (Ingredient value : ingredientMap.values()) {
-            if (ingredientMap.containsKey(id)) {
+        for (Integer integer : ingredientMap.keySet()) {
+            if (integer.equals(id)) {
                 ingredientMap.put(id, ingredient);
-                return ingredient;
             }
         }
         return null;
@@ -40,8 +39,8 @@ public class IngredientServicesImpl implements IngredientServices {
 
     @Override
     public boolean removeIngredient(Integer id) {
-        for (Ingredient value : ingredientMap.values()) {
-            if (ingredientMap.containsKey(id)) {
+        for (Integer integer : ingredientMap.keySet()) {
+            if (integer.equals(id)) {
                 ingredientMap.remove(id);
                 return true;
             }
@@ -50,13 +49,13 @@ public class IngredientServicesImpl implements IngredientServices {
     }
 
     @Override
-    public ResponseEntity<Ingredient> getIngredientById(Integer id) {
-        for (Ingredient value : ingredientMap.values()) {
-            if (ingredientMap.containsKey(id)) {
-               return ResponseEntity.ok(value);
+    public Ingredient getIngredientById(Integer id) {
+        for (Integer integer : ingredientMap.keySet()) {
+            if (integer.equals(id)) {
+                return ingredientMap.get(id);
             }
         }
-        return ResponseEntity.notFound().build();
+        return null;
     }
 
     @Override

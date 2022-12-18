@@ -12,11 +12,11 @@ import java.util.Map;
 @Service
 public class RecipeServicesImpl implements RecipeServices {
     public static Integer idRecipe = 0;
-    private static Map<Integer, Recipe> recipeMap = new LinkedHashMap<>();
+    private final Map<Integer, Recipe> recipeMap = new LinkedHashMap<>();
 
     @Override
     public Integer addRecipe(Recipe recipe) {
-        this.recipeMap.put(idRecipe, recipe);
+        recipeMap.put(idRecipe, recipe);
         idRecipe++;
         return idRecipe;
     }
@@ -29,10 +29,10 @@ public class RecipeServicesImpl implements RecipeServices {
     }
 
     @Override
-    public ResponseEntity<Recipe> getRecipeById(Integer idRecipe) {
-        for (Recipe value : recipeMap.values()) {
-            if (recipeMap.containsKey(idRecipe)) {
-                return ResponseEntity.ok(value);
+    public Recipe getRecipeById(Integer idRecipe) {
+        for (Integer integer : recipeMap.keySet()) {
+            if (integer.equals(idRecipe)) {
+                return recipeMap.get(idRecipe);
             }
         }
         return null;
@@ -40,8 +40,8 @@ public class RecipeServicesImpl implements RecipeServices {
 
     @Override
     public Recipe editRecipe(Integer idRecipe, Recipe recipe) {
-        for (Recipe value : recipeMap.values()) {
-            if (recipeMap.containsKey(idRecipe)) {
+        for (Integer integer : recipeMap.keySet()) {
+            if (integer.equals(idRecipe)) {
                 recipeMap.put(idRecipe, recipe);
                 return recipe;
             }
@@ -50,8 +50,8 @@ public class RecipeServicesImpl implements RecipeServices {
     }
     @Override
     public boolean removeRecipe(Integer idRecipe) {
-        for (Recipe value : recipeMap.values()) {
-            if (recipeMap.containsKey(idRecipe)) {
+        for (Integer integer : recipeMap.keySet()) {
+            if (integer.equals(idRecipe)) {
                 recipeMap.remove(idRecipe);
                 return true;
             }
